@@ -1,0 +1,119 @@
+﻿			<div class="shadow p-3 mb-5 bg-white rounded"><h3>Bem vindo ao cadastro de projetos!</h3></div>
+			<form id="frmCad" method="get" action="#">
+					<form class="needs-validation" novalidate>
+				<div class="form-row" align="left">
+					<div class="col-md-4 mb-3">
+						<label for="txtCadCliente">Cliente:</label>
+						<input type="text" class="form-control" id="txtCadCliente" name="txtCadCliente" placeholder="Cliente" value="" required>
+						<div class="valid-feedback">
+								Tudo certo!
+							  </div>
+							  <div class="invalid-feedback">
+									  Por favor, Digite o nome do cliente.
+									</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="txtCadLocal">Localidade:</label>
+						<input type="text" class="form-control" id="txtCadLocal" name="txtCadLocal" placeholder="Localidade" value="" required>
+						<div class="valid-feedback">
+								Tudo certo!
+							  </div>
+							  <div class="invalid-feedback">
+									  Por favor, Digite uma Localidade.
+									</div>
+					</div>
+					<div class="col-md-4 mb-3">
+						<label for="txtCadResp">Responsável:</label>
+						<input type="text" class="form-control" id="txtCadResp" name="txtCadResp" placeholder="Responsavel" value="" required >
+						<div class="valid-feedback">
+								Tudo certo!
+							  </div>
+							  <div class="invalid-feedback">
+									  Por favor, Informe o Responsavel.
+									</div>
+					</div>
+				</div>
+				<div class="form-row" align="left">
+					<div class="col-md-6 mb-3">
+						<label for="txtCadHoras">Horas:</label>
+						<input type="text" class="form-control" id="txtCadHoras" name="txtCadHoras" placeholder="Horas" required>
+						<div class="valid-feedback">
+								Tudo certo!
+							  </div>
+							  <div class="invalid-feedback">
+									  Por favor, Digite a quantidade de horas.
+									</div>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="txtCadDtIni">Data Inicial:</label>
+						<input type="date" class="form-control" id="txtCadDtIni" name="txtCadDtIni" placeholder="Data Inicial" required>
+						<div class="valid-feedback">
+								Tudo certo!
+							  </div>
+							  <div class="invalid-feedback">
+									  Por favor, Digite a data Inicial.
+									</div>
+					</div>
+					<div class="col-md-3 mb-3">
+						<label for="txtCadValor">Valor:</label>
+						<input type="number" class="form-control" id="txtCadValor" name="txtCadValor" placeholder="Valor" required>
+						<div class="valid-feedback">
+								Tudo certo!
+							  </div>
+							  <div class="invalid-feedback">
+									  Por favor, Digite o valor.
+									</div>
+					</div>
+				</div>
+				<input type="submit" id="bCadastrar" name="bCadastrar" class="btn btn-primary" value="Cadastrar" />
+			</form>
+			<div class="shadow p-3 mb-5 bg-white rounded"><h5>É rápido e prático, preencha os campos acima e pronto :)</h5></div>
+			<hr>
+			<div id="aSucesso" class="alert alert-success" style="display:none;" role="alert">
+				Cadastro efetivado com sucesso.
+			</div>
+			<div id="aErro" class="alert alert-danger" style="display:none;" role="alert">
+				Erro ao cadastrar o projeto.
+			</div>			
+			<script>
+				$( document ).ready(function() {
+					// Variável para conter a requisiçao
+					var request;
+
+					// Vincular ao evento de envio do formulário
+					$('#frmCad').submit(function(event){
+					
+						
+						// configurar  variáveis locais
+						var $form = $(this);
+
+						//  selecionar e armazenar em cache todos os campos
+						var $inputs = $form.find("input, select, button, textarea");
+						
+						// Serializar os no formulário
+						var serializedData = $form.serialize();
+						// Envia a requisiçao para cad.php
+						request = $.ajax({
+							url: "./cad.php",
+							type: "GET",
+							data: serializedData,
+							success:function(data) {
+								if (data) {
+									$('#frmCad')[0].reset(); // apaga formulário
+									$('#aSucesso').fadeIn('slow');
+									setTimeout(function() {
+										$('#aSucesso').fadeOut('slow');
+									}, 15000);
+								} else {
+									$('#aErro').show();
+									setTimeout(function() {
+										$('#aErro').fadeOut('slow');
+									}, 15000);
+
+								}
+							} 
+						});
+        
+	});
+});
+</script>			
